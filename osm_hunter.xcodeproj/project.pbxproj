@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2DB0FA70F4E44545ABBDE5C3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB366C98FA436A81F0B4BA /* libPods.a */; };
+		DE4CF6C319582BCA00CCF6B1 /* Login_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE4CF6C219582BCA00CCF6B1 /* Login_iPhone.storyboard */; };
+		DE4CF6CC1958325700CCF6B1 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4CF6CB1958325700CCF6B1 /* SettingsManager.m */; };
+		DE4CF6E11958661B00CCF6B1 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4CF6D91958661B00CCF6B1 /* UIImage+Rotate.m */; };
 		DED7D50C19547DE80055A2F9 /* BuildingAttributeOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4EE19547DE80055A2F9 /* BuildingAttributeOptionViewController.m */; };
 		DED7D50D19547DE80055A2F9 /* BuildingInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4F019547DE80055A2F9 /* BuildingInfoViewController.m */; };
 		DED7D50E19547DE80055A2F9 /* DiscoverModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4F219547DE80055A2F9 /* DiscoverModeViewController.m */; };
@@ -22,6 +25,9 @@
 		DED7D51719547DE80055A2F9 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D50619547DE80055A2F9 /* LocationController.m */; };
 		DED7D51819547DE80055A2F9 /* BuildingAttributeTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D50919547DE80055A2F9 /* BuildingAttributeTextCell.m */; };
 		DED7D51919547DE80055A2F9 /* BuildingShape.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D50B19547DE80055A2F9 /* BuildingShape.m */; };
+		DEE6CB8A195976BE0049A957 /* OSMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE6CB89195976BE0049A957 /* OSMLoginViewController.m */; };
+		DEE6CB8D1959B95E0049A957 /* NSURL+QueryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE6CB8C1959B95E0049A957 /* NSURL+QueryParser.m */; };
+		DEE6CB911959D16C0049A957 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE6CB901959D16C0049A957 /* HomeViewController.m */; };
 		DEEB414C19502FAA00D4FB07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEEB414B19502FAA00D4FB07 /* Foundation.framework */; };
 		DEEB414E19502FAA00D4FB07 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEEB414D19502FAA00D4FB07 /* CoreGraphics.framework */; };
 		DEEB415019502FAA00D4FB07 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEEB414F19502FAA00D4FB07 /* UIKit.framework */; };
@@ -50,6 +56,13 @@
 
 /* Begin PBXFileReference section */
 		ABBB366C98FA436A81F0B4BA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE4CF6C0195820CE00CCF6B1 /* Fuhlsbüttler Straße.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Fuhlsbüttler Straße.gpx"; sourceTree = "<group>"; };
+		DE4CF6C1195827E800CCF6B1 /* Ohlsdorfer Straße.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Ohlsdorfer Straße.gpx"; sourceTree = "<group>"; };
+		DE4CF6C219582BCA00CCF6B1 /* Login_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login_iPhone.storyboard; sourceTree = "<group>"; };
+		DE4CF6CA1958325700CCF6B1 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
+		DE4CF6CB1958325700CCF6B1 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
+		DE4CF6D81958661B00CCF6B1 /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
+		DE4CF6D91958661B00CCF6B1 /* UIImage+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
 		DED7D4E919547D570055A2F9 /* Deichstraße 27.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Deichstraße 27.gpx"; sourceTree = "<group>"; };
 		DED7D4EA19547D570055A2F9 /* Track_1.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Track_1.gpx; sourceTree = "<group>"; };
 		DED7D4ED19547DE80055A2F9 /* BuildingAttributeOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingAttributeOptionViewController.h; sourceTree = "<group>"; };
@@ -80,6 +93,12 @@
 		DED7D50919547DE80055A2F9 /* BuildingAttributeTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildingAttributeTextCell.m; sourceTree = "<group>"; };
 		DED7D50A19547DE80055A2F9 /* BuildingShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingShape.h; sourceTree = "<group>"; };
 		DED7D50B19547DE80055A2F9 /* BuildingShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildingShape.m; sourceTree = "<group>"; };
+		DEE6CB88195976BE0049A957 /* OSMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMLoginViewController.h; sourceTree = "<group>"; };
+		DEE6CB89195976BE0049A957 /* OSMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMLoginViewController.m; sourceTree = "<group>"; };
+		DEE6CB8B1959B95E0049A957 /* NSURL+QueryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+QueryParser.h"; sourceTree = "<group>"; };
+		DEE6CB8C1959B95E0049A957 /* NSURL+QueryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+QueryParser.m"; sourceTree = "<group>"; };
+		DEE6CB8F1959D16C0049A957 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		DEE6CB901959D16C0049A957 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		DEEB414819502FAA00D4FB07 /* osm_hunter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = osm_hunter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEEB414B19502FAA00D4FB07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DEEB414D19502FAA00D4FB07 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -126,11 +145,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE4CF6CD1958661A00CCF6B1 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				DE4CF6D81958661B00CCF6B1 /* UIImage+Rotate.h */,
+				DE4CF6D91958661B00CCF6B1 /* UIImage+Rotate.m */,
+				DEE6CB8B1959B95E0049A957 /* NSURL+QueryParser.h */,
+				DEE6CB8C1959B95E0049A957 /* NSURL+QueryParser.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		DEC344D319504A9D00B9FC68 /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				DEEB415D19502FAA00D4FB07 /* Main_iPhone.storyboard */,
 				DEEB416019502FAA00D4FB07 /* Main_iPad.storyboard */,
+				DE4CF6C219582BCA00CCF6B1 /* Login_iPhone.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -147,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				DED7D4E919547D570055A2F9 /* Deichstraße 27.gpx */,
+				DE4CF6C0195820CE00CCF6B1 /* Fuhlsbüttler Straße.gpx */,
+				DE4CF6C1195827E800CCF6B1 /* Ohlsdorfer Straße.gpx */,
 				DED7D4EA19547D570055A2F9 /* Track_1.gpx */,
 			);
 			path = GPX;
@@ -158,6 +191,7 @@
 				DED7D4F519547DE80055A2F9 /* Model */,
 				DED7D50719547DE80055A2F9 /* View */,
 				DED7D4EC19547DE80055A2F9 /* Controller */,
+				DE4CF6CD1958661A00CCF6B1 /* Categories */,
 				DED7D50019547DE80055A2F9 /* Shared */,
 			);
 			path = Classes;
@@ -166,14 +200,18 @@
 		DED7D4EC19547DE80055A2F9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				DED7D4ED19547DE80055A2F9 /* BuildingAttributeOptionViewController.h */,
-				DED7D4EE19547DE80055A2F9 /* BuildingAttributeOptionViewController.m */,
-				DED7D4EF19547DE80055A2F9 /* BuildingInfoViewController.h */,
-				DED7D4F019547DE80055A2F9 /* BuildingInfoViewController.m */,
-				DED7D4F119547DE80055A2F9 /* DiscoverModeViewController.h */,
-				DED7D4F219547DE80055A2F9 /* DiscoverModeViewController.m */,
 				DED7D4F319547DE80055A2F9 /* LuckyModeViewController.h */,
 				DED7D4F419547DE80055A2F9 /* LuckyModeViewController.m */,
+				DED7D4F119547DE80055A2F9 /* DiscoverModeViewController.h */,
+				DED7D4F219547DE80055A2F9 /* DiscoverModeViewController.m */,
+				DED7D4EF19547DE80055A2F9 /* BuildingInfoViewController.h */,
+				DED7D4F019547DE80055A2F9 /* BuildingInfoViewController.m */,
+				DED7D4ED19547DE80055A2F9 /* BuildingAttributeOptionViewController.h */,
+				DED7D4EE19547DE80055A2F9 /* BuildingAttributeOptionViewController.m */,
+				DEE6CB88195976BE0049A957 /* OSMLoginViewController.h */,
+				DEE6CB89195976BE0049A957 /* OSMLoginViewController.m */,
+				DEE6CB8F1959D16C0049A957 /* HomeViewController.h */,
+				DEE6CB901959D16C0049A957 /* HomeViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -204,6 +242,8 @@
 				DED7D50419547DE80055A2F9 /* Constants.m */,
 				DED7D50519547DE80055A2F9 /* LocationController.h */,
 				DED7D50619547DE80055A2F9 /* LocationController.m */,
+				DE4CF6CA1958325700CCF6B1 /* SettingsManager.h */,
+				DE4CF6CB1958325700CCF6B1 /* SettingsManager.m */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -217,6 +257,13 @@
 				DED7D50B19547DE80055A2F9 /* BuildingShape.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		DEE6CB8E1959C91C0049A957 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 		DEEB413F19502FAA00D4FB07 = {
@@ -257,6 +304,7 @@
 				DED7D4EB19547DE80055A2F9 /* Classes */,
 				DEC344D319504A9D00B9FC68 /* UI */,
 				DED7D4E719547D570055A2F9 /* Resources */,
+				DEE6CB8E1959C91C0049A957 /* iPad */,
 				DEEB415A19502FAA00D4FB07 /* AppDelegate.h */,
 				DEEB415B19502FAA00D4FB07 /* AppDelegate.m */,
 				DEEB416919502FAA00D4FB07 /* Images.xcassets */,
@@ -379,6 +427,7 @@
 				DEEB416A19502FAA00D4FB07 /* Images.xcassets in Resources */,
 				DEEB415F19502FAA00D4FB07 /* Main_iPhone.storyboard in Resources */,
 				DEEB415619502FAA00D4FB07 /* InfoPlist.strings in Resources */,
+				DE4CF6C319582BCA00CCF6B1 /* Login_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,13 +483,18 @@
 				DED7D50D19547DE80055A2F9 /* BuildingInfoViewController.m in Sources */,
 				DEEB415C19502FAA00D4FB07 /* AppDelegate.m in Sources */,
 				DED7D51219547DE80055A2F9 /* BuildingAttributeOption.m in Sources */,
+				DEE6CB8D1959B95E0049A957 /* NSURL+QueryParser.m in Sources */,
+				DEE6CB911959D16C0049A957 /* HomeViewController.m in Sources */,
 				DED7D51419547DE80055A2F9 /* BuildingAttributeText.m in Sources */,
 				DED7D51319547DE80055A2F9 /* BuildingAttributeSelect.m in Sources */,
 				DED7D50F19547DE80055A2F9 /* LuckyModeViewController.m in Sources */,
 				DED7D51619547DE80055A2F9 /* Constants.m in Sources */,
 				DED7D51519547DE80055A2F9 /* APIClient.m in Sources */,
+				DE4CF6CC1958325700CCF6B1 /* SettingsManager.m in Sources */,
+				DE4CF6E11958661B00CCF6B1 /* UIImage+Rotate.m in Sources */,
 				DED7D51919547DE80055A2F9 /* BuildingShape.m in Sources */,
 				DEEB415819502FAA00D4FB07 /* main.m in Sources */,
+				DEE6CB8A195976BE0049A957 /* OSMLoginViewController.m in Sources */,
 				DED7D50C19547DE80055A2F9 /* BuildingAttributeOptionViewController.m in Sources */,
 				DED7D51019547DE80055A2F9 /* Building.m in Sources */,
 				DED7D51719547DE80055A2F9 /* LocationController.m in Sources */,
@@ -586,8 +640,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "osm_hunter/osm_hunter-Prefix.pch";
 				INFOPLIST_FILE = "osm_hunter/osm_hunter-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5971B9AB-5BF4-470F-9D36-23BAFCEDE1A6";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -598,13 +654,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "osm_hunter/osm_hunter-Prefix.pch";
 				INFOPLIST_FILE = "osm_hunter/osm_hunter-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5971B9AB-5BF4-470F-9D36-23BAFCEDE1A6";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

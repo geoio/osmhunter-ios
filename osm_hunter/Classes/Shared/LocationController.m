@@ -1,6 +1,6 @@
 //
 //  LocationController.h
-//  NochOffen
+//  osm_hunter
 //
 //  Created by Andrew Teil on 28.04.12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -41,8 +41,9 @@ static LocationController *sharedInstance;
         _locationKnown = NO;
         self.currentLocation = [[CLLocation alloc] init];
         locationManager = [[CLLocationManager alloc] init];
-        locationManager.distanceFilter = 100;
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+//        locationManager.distanceFilter = 100;
+        locationManager.activityType = CLActivityTypeOtherNavigation;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
         locationManager.delegate = self;
         [self start];
     }
@@ -52,46 +53,48 @@ static LocationController *sharedInstance;
 
 - (void)start {
     [locationManager startUpdatingLocation];
-    [self.delegate didStartUpdatingLocation];
+    [locationManager startUpdatingHeading];
+    if ([self.delegate respondsToSelector:@selector(didStartUpdatingLocation)]) {
+        [self.delegate didStartUpdatingLocation];
+    }
     NSLog(@"Start updating location");
 }
 
 - (void)stop {
     [locationManager stopUpdatingLocation];
-    //[self.delegate didStopUpdatingLocation];
+    if ([self.delegate respondsToSelector:@selector(didStopUpdatingLocation)]) {
+        [self.delegate didStopUpdatingLocation];
+    }
     NSLog(@"Stop updating location");
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    [self locationUpdated:[locations lastObject]];
-}
-
-
-// This method is deprecated in iOS 6 and it doesn't get called
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //if the time interval returned from core location is more than two minutes we ignore it because it might be from an old session
-    if ( abs([newLocation.timestamp timeIntervalSinceDate: [NSDate date]]) < 120) {     
-        [self locationUpdated:newLocation];
-    }
-}
-
-- (void)locationUpdated:(CLLocation *)newLocation {
-    self.currentLocation = newLocation;
-    [self.delegate didSuccessUpdatingLocation:self.currentLocation];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLocationUpdated object:self];
-    NSLog(@"Location updated: latitude %+.6f, longitude %+.6f\n", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
-    
-    if (!_locationKnown) {
-        NSLog(@"Location is now known");
-        _locationKnown = YES;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLocationKnown object:self];
+    if ([self.delegate respondsToSelector:@selector(didUpdateLocation:)]) {
+        self.currentLocation = [locations lastObject];
+        [self.delegate didUpdateLocation:self.currentLocation];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLocationUpdated object:self];
+        NSLog(@"Location updated: latitude %+.6f, longitude %+.6f\n", self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude);
+        
+        if (!_locationKnown) {
+            NSLog(@"Location is now known");
+            _locationKnown = YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLocationKnown object:self];
+        }
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     NSLog(@"%@", error.description);
-    [self.delegate didFailureUpdatingLocation];
+    if ([self.delegate respondsToSelector:@selector(didFailUpdateLocationWithError:)]) {
+        [self.delegate didFailUpdateLocationWithError:error];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
+    if ([self.delegate respondsToSelector:@selector(didUpdateHeading:)]) {
+        [self.delegate didUpdateHeading:newHeading];
+    }
 }
 
 - (void)checkLocationServicesTurnedOn {
@@ -115,10 +118,5 @@ static LocationController *sharedInstance;
         [alert show];      
     }    
 }
-
-- (void)didStopUpdatingLocation {
-    NSLog(@"Stop updating location");
-}
-
 
 @end

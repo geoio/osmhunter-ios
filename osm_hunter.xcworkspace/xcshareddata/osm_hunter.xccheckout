@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>BF48CCCF-F4C4-45D7-BEC5-1F28E15DFFA9</string>
+	<string>F2968E47-42BC-42CA-8FF3-BC9B4256D65F</string>
 	<key>IDESourceControlProjectName</key>
 	<string>osm_hunter</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>836A1587-7109-434E-9883-884B3A2D6ADD</key>
-		<string>https://github.com/andrexus/osmhunter-ios.git</string>
+		<key>6E41FF8B-A316-4EFF-A4AD-615667BC79BD</key>
+		<string>ssh://github.com/geoio/osmhunter-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>osm_hunter.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>836A1587-7109-434E-9883-884B3A2D6ADD</key>
+		<key>6E41FF8B-A316-4EFF-A4AD-615667BC79BD</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/andrexus/osmhunter-ios.git</string>
+	<string>ssh://github.com/geoio/osmhunter-ios.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>836A1587-7109-434E-9883-884B3A2D6ADD</string>
+	<string>6E41FF8B-A316-4EFF-A4AD-615667BC79BD</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>836A1587-7109-434E-9883-884B3A2D6ADD</string>
+			<string>6E41FF8B-A316-4EFF-A4AD-615667BC79BD</string>
 			<key>IDESourceControlWCCName</key>
 			<string>osmhunter-ios</string>
 		</dict>

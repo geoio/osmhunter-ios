@@ -86,6 +86,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidLayoutSubviews
+{
+    self.mapBoxView.frame = self.view.frame;
+}
+
 - (IBAction)showNextBuildingButtonPressed:(id)sender {
     [self showNextBuilding];
 }

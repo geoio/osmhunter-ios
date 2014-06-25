@@ -7,17 +7,19 @@
 //
 
 #import "AppDelegate.h"
+#import "SettingsManager.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-        UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-        splitViewController.delegate = (id)navigationController.topViewController;
+{    
+    // Override first storyboard
+    if (![[SettingsManager sharedInstance] apiKey]) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardLoginIPhone bundle:nil];
+        UIViewController *viewController = [storyboard instantiateInitialViewController];
+        self.window.rootViewController = viewController;
     }
+    
     return YES;
 }
 							

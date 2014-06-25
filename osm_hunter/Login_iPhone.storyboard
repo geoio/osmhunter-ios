@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2My-er-Z9C">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="jyL-79-prA">
+            <objects>
+                <viewController id="2My-er-Z9C" customClass="OSMLoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0YX-ec-Bg9"/>
+                        <viewControllerLayoutGuide type="bottom" id="iaG-WX-fOp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VLx-Ac-sSR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvE-c2-3JT">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="2My-er-Z9C" id="rj1-kh-lXL"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PvE-c2-3JT" firstAttribute="leading" secondItem="VLx-Ac-sSR" secondAttribute="leading" id="9fc-Hf-hwt"/>
+                            <constraint firstItem="PvE-c2-3JT" firstAttribute="leading" secondItem="VLx-Ac-sSR" secondAttribute="leading" id="Oda-wa-eUv"/>
+                            <constraint firstAttribute="trailing" secondItem="PvE-c2-3JT" secondAttribute="trailing" id="W7d-DN-ZmT"/>
+                            <constraint firstItem="PvE-c2-3JT" firstAttribute="top" secondItem="0YX-ec-Bg9" secondAttribute="bottom" id="d9g-TD-lYe"/>
+                            <constraint firstAttribute="trailing" secondItem="PvE-c2-3JT" secondAttribute="trailing" id="eir-ER-NBk"/>
+                            <constraint firstItem="iaG-WX-fOp" firstAttribute="top" secondItem="PvE-c2-3JT" secondAttribute="bottom" id="lXN-83-MZr"/>
+                            <constraint firstItem="iaG-WX-fOp" firstAttribute="top" secondItem="PvE-c2-3JT" secondAttribute="bottom" id="vVa-Jq-m4t"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="XzS-pj-eKs"/>
+                    <connections>
+                        <outlet property="webView" destination="PvE-c2-3JT" id="fQM-Gb-R2b"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b9p-Ig-6yz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="821" y="36"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

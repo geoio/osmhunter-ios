@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 happy-bits. All rights reserved.
 //
 
+#import <MapKit/MapKit.h>
 #import "BuildingInfoViewController.h"
 #import "BuildingAttributeOptionViewController.h"
 #import "BuildingAttribute.h"
@@ -48,6 +49,12 @@
     [self.tableView reloadData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.view.window endEditing:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -69,7 +76,7 @@
         case SECTION_BUILDING_ATTRIBUTES:
             return [self.building.attributes count];
         case SECTION_ACTIONS:
-            return 1;
+            return 2;
         default:
             return 0;
     }
@@ -140,7 +147,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView actionCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellAction forIndexPath:indexPath];
-    cell.textLabel.text = @"Building doesn't have a number";
+    switch (indexPath.row) {
+        case 0:
+            cell.textLabel.text = @"Building doesn't have a number";
+            break;
+        case 1:
+            cell.textLabel.text = @"Navigate";
+            break;
+        default:
+            break;
+    }
+
+
     return cell;
 }
 
@@ -180,7 +198,10 @@
                 NSLog(@"Do something");
                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
                 break;
-                
+            case 1:
+                [self navigateToBuilding];
+                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                break;
             default:
                 break;
         }
@@ -219,6 +240,7 @@
                                                            delegate:nil
                                                   cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
+            [self.navigationController popViewControllerAnimated:YES];
         } else {
             NSLog(@"Error: %@", error);
         }
@@ -234,6 +256,18 @@
     }
     NSLog(@"%@", attributes);
     return attributes;
+}
+
+- (void)navigateToBuilding {
+    MKPlacemark *placeMark = [[MKPlacemark alloc] initWithCoordinate:self.building.shapeCenter addressDictionary:nil];
+    
+    MKMapItem *destination =  [[MKMapItem alloc] initWithPlacemark:placeMark];
+//    [destination setName:@"name"];
+    
+    if ([destination respondsToSelector:@selector(openInMapsWithLaunchOptions:)])
+    {
+        [destination openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking}];
+    }
 }
 
 @end

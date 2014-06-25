@@ -7,14 +7,14 @@
 //
 
 #import <Mapbox/Mapbox.h>
-#import "SVProgressHUD.h"
+#import "UIImage+Rotate.h"
 #import "DiscoverModeViewController.h"
 #import "BuildingInfoViewController.h"
 #import "LocationController.h"
 #import "APIClient.h"
 #import "Building.h"
 
-@interface DiscoverModeViewController () <RMMapViewDelegate>
+@interface DiscoverModeViewController () <RMMapViewDelegate, LocationControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet RMMapView *mapBoxView;
 @property (nonatomic, strong) Building *selectedBuilding;
@@ -40,9 +40,8 @@
     
     RMMapboxSource *mapBoxTileSource = [[RMMapboxSource alloc] initWithMapID:kMapBoxMapId];
     self.mapBoxView = [[RMMapView alloc] initWithFrame:self.view.frame andTilesource:mapBoxTileSource];
-    self.mapBoxView.showsUserLocation = YES;
     self.mapBoxView.userTrackingMode = RMUserTrackingModeFollowWithHeading;
-    //    self.mapBoxView.hideAttribution = YES;
+    self.mapBoxView.showsUserLocation = NO;
     self.mapBoxView.delegate = self;
     [self.view addSubview:self.mapBoxView];
 }
@@ -50,14 +49,17 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [[LocationController sharedInstance] setDelegate:self];
+    [[LocationController sharedInstance] start];
+    
     [[LocationController sharedInstance] checkLocationServicesTurnedOn];
     [[LocationController sharedInstance] checkApplicationHasLocationServicesPermission];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.mapBoxView.showsUserLocation = NO;
-    [SVProgressHUD dismiss];
+
+    [[LocationController sharedInstance] stop];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,14 +68,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidLayoutSubviews
+{
+    self.mapBoxView.frame = self.view.frame;
+}
+
 - (void)fetchResults {
     if (self.currentLocation) {
-        [SVProgressHUD showWithStatus:@"Loading data"];
+        [self showNavbarLoadingMessage];
         NSMutableArray *annotations = [NSMutableArray array];
         [[APIClient sharedClient] getBuildingsNearby:self.currentLocation.coordinate limit:kFetchLimit offset:0 completion:^(NSDictionary *responseData, NSError *error) {
-            [SVProgressHUD dismiss];
+            [self hideNavbarLoadingMessage];
             if (!error) {
-                [self.mapBoxView removeAllAnnotations];
+                for (RMAnnotation *annotation in self.mapBoxView.annotations) {
+                    if ([annotation.userInfo isKindOfClass:[Building class]]) {
+                        [self.mapBoxView removeAnnotation:annotation];
+                    }
+                }
+//                [self.mapBoxView removeAllAnnotations];
                 for (NSDictionary *item in responseData[@"results"]) {
                     Building *building = [[Building alloc] initWithDictionary:item];
                     RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:self.mapBoxView
@@ -91,6 +103,24 @@
     }
 }
 
+- (void)showNavbarLoadingMessage {
+    UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    ai.hidesWhenStopped = NO; //I added this just so I could see it
+    [ai startAnimating];
+    self.navigationItem.title = @"Loading data";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:ai];
+}
+
+- (void)hideNavbarLoadingMessage {
+    self.navigationItem.title = nil;
+    self.navigationItem.rightBarButtonItem = nil;
+}
+
+- (void) drawCurrentUserLocation {
+    
+}
+
+
 #pragma mark RMMapViewDelegate
 
 - (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
@@ -98,53 +128,75 @@
     if (annotation.isUserLocationAnnotation)
         return nil;
     
-    
-    Building *building = (Building *)annotation.userInfo;
-    //    BuildingShape *shape = [BuildingShape shapeForBuilding:building];
-    RMShape *shape = [[RMShape alloc] initWithView:self.mapBoxView];
-    
-    shape.lineColor = [UIColor yellowColor];
-    shape.lineWidth = 2.0;
-    shape.fillColor = [UIColor purpleColor];
-    
-    for (CLLocation *point in building.shapeNodes)
-        [shape addLineToCoordinate:point.coordinate];
-    
-    return shape;
+    if ([annotation.userInfo isKindOfClass:[Building class]]) {
+        Building *building = (Building *)annotation.userInfo;
+        //    BuildingShape *shape = [BuildingShape shapeForBuilding:building];
+        RMShape *shape = [[RMShape alloc] initWithView:self.mapBoxView];
+        
+        shape.lineColor = [UIColor yellowColor];
+        shape.lineWidth = 2.0;
+        shape.fillColor = [UIColor purpleColor];
+        
+        for (CLLocation *point in building.shapeNodes)
+            [shape addLineToCoordinate:point.coordinate];
+        
+        return shape;
+    } else {
+        CLHeading *heading = (CLHeading *)annotation.userInfo;
+        UIImage *headingArrow = [[UIImage imageNamed:@"heading_arrow"] imageRotatedByDegrees:heading.magneticHeading];
+        RMMarker *userLocationMarker = [[RMMarker alloc] initWithUIImage:headingArrow];
+        userLocationMarker.annotation = annotation;
+        return userLocationMarker;
+    }
 }
 
 - (void)mapView:(RMMapView *)mapView didSelectAnnotation:(RMAnnotation *)annotation {
-    self.selectedBuilding = (Building *)annotation.userInfo;
-    [SVProgressHUD showWithStatus:@"Loading data"];
-    [[APIClient sharedClient] getBuildingAttributes:self.selectedBuilding.buildingId completion:^(NSDictionary *responseData, NSError *error) {
-        [SVProgressHUD dismiss];
-        if (!error) {
-            [self.selectedBuilding loadAttributesFromDictionary:responseData];
-            [self performSegueWithIdentifier:kSegueShowBuildingInfo sender:self];
-        } else {
-            NSLog(@"Error: %@", error);
-        }
-    }];
+    if ([annotation.userInfo isKindOfClass:[Building class]]) {
+        self.selectedBuilding = (Building *)annotation.userInfo;
+        [self showNavbarLoadingMessage];
+        [[APIClient sharedClient] getBuildingAttributes:self.selectedBuilding.buildingId completion:^(NSDictionary *responseData, NSError *error) {
+            [self hideNavbarLoadingMessage];
+            if (!error) {
+                [self.selectedBuilding loadAttributesFromDictionary:responseData];
+                [self performSegueWithIdentifier:kSegueShowBuildingInfo sender:self];
+            } else {
+                NSLog(@"Error: %@", error);
+            }
+        }];
+    }
 }
 
-- (void)mapView:(RMMapView *)mapView didUpdateUserLocation:(RMUserLocation *)userLocation {
+#pragma mark LocationController delegate
+
+- (void)didUpdateLocation:(CLLocation *)location {
     if (!self.currentLocation) {
-        self.currentLocation = userLocation.location;
+        self.currentLocation = location;
         [self.mapBoxView setZoom:17 animated:YES];
+        [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
         [self fetchResults];
     }
     if (!self.oldLocation) {
-        self.oldLocation = userLocation.location;
+        self.oldLocation = location;
     }
-    
-    [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
     
     CLLocationDistance distance = [self.oldLocation distanceFromLocation:self.currentLocation];
     if (distance > 100) {
         [self fetchResults];
         self.oldLocation = self.currentLocation;
+        [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
     }
-    self.currentLocation = userLocation.location;
+    self.currentLocation = location;
+}
+
+- (void)didUpdateHeading:(CLHeading *)newHeading {
+    for (RMAnnotation *annotaion in self.mapBoxView.annotations) {
+        if (![annotaion.userInfo isKindOfClass:[Building class]]) {
+            [self.mapBoxView removeAnnotation:annotaion];
+        }
+    }
+    RMAnnotation *userLocation = [RMAnnotation annotationWithMapView:self.mapBoxView coordinate:self.currentLocation.coordinate andTitle:nil];
+    userLocation.userInfo = newHeading;
+    [self.mapBoxView addAnnotation:userLocation];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

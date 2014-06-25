@@ -1,6 +1,6 @@
 //
 //  Constants.h
-//  GeoBuddy
+//  osm_hunter
 //
 //  Created by Andrew Tarasenko on 27/01/14.
 //  Copyright (c) 2014 estivo. All rights reserved.
@@ -11,6 +11,8 @@ extern NSString * const kAPIBaseUrl;
 extern NSString * const kAPIDateFormat;
 
 extern NSString * const kKeychainServiceName;
+
+extern NSString * const kSettingsSessionId;
 
 extern NSString * const kMapBoxMapId;
 extern int const kFetchLimit;
@@ -26,3 +28,6 @@ extern NSString * const kCellText;
 extern NSString * const kCellSelect;
 extern NSString * const kCellAction;
 extern NSString * const kCellAttribureOptionValue;
+
+extern NSString * const kStoryboardLoginIPhone;
+extern NSString * const kStoryboardMainIPhone;

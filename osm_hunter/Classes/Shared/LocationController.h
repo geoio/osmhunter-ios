@@ -1,6 +1,6 @@
 //
 //  LocationController.h
-//  NochOffen
+//  osm_hunter
 //
 //  Created by Andrew Teil on 28.04.12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -9,12 +9,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 
-@protocol LocationControllerDelegate
+@protocol LocationControllerDelegate <NSObject>
 @optional
 - (void)didStartUpdatingLocation;
 - (void)didStopUpdatingLocation;
-- (void)didSuccessUpdatingLocation:(CLLocation *)location;
-- (void)didFailureUpdatingLocation;
+- (void)didUpdateLocation:(CLLocation *)location;
+- (void)didFailUpdateLocationWithError:(NSError *)error;
+- (void)didUpdateHeading:(CLHeading *)newHeading;
 
 @end
 

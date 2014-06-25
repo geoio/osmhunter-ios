@@ -1,12 +1,13 @@
 //
 //  APIClient.m
-//  GeoBuddy
+//  osm_hunter
 //
 //  Created by Andrew Tarasenko on 24/01/14.
 //  Copyright (c) 2014 estivo. All rights reserved.
 //
 
 #import "APIClient.h"
+#import "SettingsManager.h"
 
 
 @implementation APIClient
@@ -17,7 +18,6 @@
     dispatch_once(&onceToken, ^{
         NSURL *baseUrl = [NSURL URLWithString:kAPIBaseUrl];
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        [config setHTTPAdditionalHeaders:@{@"Buddy-Agent" : @"GeoBuddy iOS client"}];
         _sharedClient = [[APIClient alloc] initWithBaseURL:baseUrl sessionConfiguration:config];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -28,6 +28,86 @@
 
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password {
     [[[APIClient sharedClient] requestSerializer] setAuthorizationHeaderFieldWithUsername:username password:password];
+}
+
+- (NSURLSessionDataTask *)getAuthDataWithCompletion:(void (^)(NSDictionary *data, NSError *error))completion {
+    NSString *urlString = @"/user/signup/";
+    NSURLSessionDataTask *dataTask = [self GET:urlString
+                                    parameters:nil
+                                       success:^(NSURLSessionDataTask *task, id responseObject) {
+                                           NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task.response;
+                                           if (httpResponse.statusCode == 200) {
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   completion(responseObject, nil);
+                                               });
+                                           } else {
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   completion(nil, nil);
+                                               });
+                                               NSLog(@"Received: %@", responseObject);
+                                               NSLog(@"Received HTTP %ld", (long) httpResponse.statusCode);
+                                           }
+                                       }
+                                       failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               completion(nil, error);
+                                           });
+                                       }];
+    return dataTask;
+}
+
+- (NSURLSessionDataTask *)getApiKeyForSessionId:(NSString *)sessionId oauthToken:(NSString *)oauthToken completion:(void (^)(NSDictionary *data, NSError *error))completion {
+    NSString *urlString = @"/user/signup/";
+    NSDictionary *params = @{@"session_id": sessionId, @"oauth_token": oauthToken};
+    NSURLSessionDataTask *dataTask = [self POST:urlString
+                                    parameters:params
+                                       success:^(NSURLSessionDataTask *task, id responseObject) {
+                                           NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task.response;
+                                           if (httpResponse.statusCode == 200) {
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   completion(responseObject, nil);
+                                               });
+                                           } else {
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   completion(nil, nil);
+                                               });
+                                               NSLog(@"Received: %@", responseObject);
+                                               NSLog(@"Received HTTP %ld", (long) httpResponse.statusCode);
+                                           }
+                                       }
+                                       failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               completion(nil, error);
+                                           });
+                                       }];
+    return dataTask;
+}
+
+- (NSURLSessionDataTask *)getUserInfoWithCompletion:(void (^)(NSDictionary *data, NSError *error))completion {
+    NSString *apiKey = [[SettingsManager sharedInstance] apiKey];
+    NSString *urlString = [NSString stringWithFormat:@"/user/?apikey=%@", apiKey];
+    NSURLSessionDataTask *dataTask = [self GET:urlString
+                                     parameters:nil
+                                        success:^(NSURLSessionDataTask *task, id responseObject) {
+                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task.response;
+                                            if (httpResponse.statusCode == 200) {
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    completion(responseObject, nil);
+                                                });
+                                            } else {
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    completion(nil, nil);
+                                                });
+                                                NSLog(@"Received: %@", responseObject);
+                                                NSLog(@"Received HTTP %ld", (long) httpResponse.statusCode);
+                                            }
+                                        }
+                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                completion(nil, error);
+                                            });
+                                        }];
+    return dataTask;
 }
 
 #pragma mark Buildings API
@@ -116,9 +196,11 @@
 }
 
 - (NSURLSessionDataTask *)updateBuildingAttributes:(NSUInteger)buildingId attributes:(NSDictionary *)attributes completion:(void (^)(NSDictionary *responseData, NSError *error))completion {
-    NSString *urlString = [NSString stringWithFormat:@"/buildings/%@", [NSNumber numberWithInteger:buildingId]];
+    NSString *apiKey = [[SettingsManager sharedInstance] apiKey];
+    NSString *urlString = [NSString stringWithFormat:@"/buildings/%@/?apikey=%@", [NSNumber numberWithInteger:buildingId], apiKey];
+    NSDictionary *params = @{@"tags": attributes};
     NSURLSessionDataTask *dataTask = [self PUT:urlString
-                                    parameters:attributes
+                                    parameters:params
                                        success:^(NSURLSessionDataTask *task, id responseObject) {
                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task.response;
                                            if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
