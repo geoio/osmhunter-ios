@@ -8,13 +8,12 @@
 
 #import "HomeViewController.h"
 #import "ApiClient.h"
-#import "UIImageView+AFNetworking.h"
-#import "UIImage+Resize.h"
+#import "SettingsManager.h"
 
 @interface HomeViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
-@property (weak, nonatomic) IBOutlet UILabel *username;
+@property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *userPoints;
 
 @end
@@ -33,7 +32,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    if (![[SettingsManager sharedInstance] userName]) {
+        [[SettingsManager sharedInstance] updateUserInfoWithCompletion:^(BOOL success, NSError *error) {
+            [self setupUserInfo];
+        }];
+    } else {
+        [self setupUserInfo];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,19 +50,20 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.userImage.image = [UIImage imageNamed:@"user_placeholder"];
+    
     [[APIClient sharedClient] getUserInfoWithCompletion:^(NSDictionary *data, NSError *error) {
         if (data) {
-            self.username.text = data[@"result"][@"display_name"];
             self.userPoints.text = [NSString stringWithFormat:@"%@ points", [data[@"result"][@"points"] stringValue]];
-            NSURL *imageUrl = [NSURL URLWithString:data[@"result"][@"image"]];
-            NSData *data = [NSData dataWithContentsOfURL:imageUrl];
-            UIImage *img = [UIImage imageWithData:data];
-            self.userImage.image = [img thumbnailImage:120 transparentBorder:0 cornerRadius:15 interpolationQuality:kCGInterpolationDefault];
         } else {
             NSLog(@"Error: %@", error);
         }
     }];
+}
+
+- (void)setupUserInfo {
+    self.userImage.image = [[SettingsManager sharedInstance] userImage];
+    self.userName.text = [[SettingsManager sharedInstance] userName];
+    self.userPoints.text = [[SettingsManager sharedInstance] userPoints];
 }
 
 @end

@@ -61,7 +61,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellAttribureOptionValue forIndexPath:indexPath];
     BuildingAttributeOption *option = self.selectedBuildingAttribute.options[indexPath.row];
     
-    cell.textLabel.text = option.value;
+    cell.textLabel.text = option.label;
     
     if ([self.selectedBuildingAttribute.value isEqualToString:option.value]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

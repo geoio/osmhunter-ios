@@ -11,6 +11,8 @@
 		DE4CF6C319582BCA00CCF6B1 /* Login_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE4CF6C219582BCA00CCF6B1 /* Login_iPhone.storyboard */; };
 		DE4CF6CC1958325700CCF6B1 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4CF6CB1958325700CCF6B1 /* SettingsManager.m */; };
 		DE4CF6E11958661B00CCF6B1 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4CF6D91958661B00CCF6B1 /* UIImage+Rotate.m */; };
+		DE637254195B0DEB00914970 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE637253195B0DEB00914970 /* AboutViewController.m */; };
+		DE637257195B0DFD00914970 /* LeaderboardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE637256195B0DFD00914970 /* LeaderboardTableViewController.m */; };
 		DED7D50C19547DE80055A2F9 /* BuildingAttributeOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4EE19547DE80055A2F9 /* BuildingAttributeOptionViewController.m */; };
 		DED7D50D19547DE80055A2F9 /* BuildingInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4F019547DE80055A2F9 /* BuildingInfoViewController.m */; };
 		DED7D50E19547DE80055A2F9 /* DiscoverModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4F219547DE80055A2F9 /* DiscoverModeViewController.m */; };
@@ -63,6 +65,10 @@
 		DE4CF6CB1958325700CCF6B1 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		DE4CF6D81958661B00CCF6B1 /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
 		DE4CF6D91958661B00CCF6B1 /* UIImage+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
+		DE637252195B0DEB00914970 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		DE637253195B0DEB00914970 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		DE637255195B0DFD00914970 /* LeaderboardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderboardTableViewController.h; sourceTree = "<group>"; };
+		DE637256195B0DFD00914970 /* LeaderboardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderboardTableViewController.m; sourceTree = "<group>"; };
 		DED7D4E919547D570055A2F9 /* Deichstraße 27.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Deichstraße 27.gpx"; sourceTree = "<group>"; };
 		DED7D4EA19547D570055A2F9 /* Track_1.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Track_1.gpx; sourceTree = "<group>"; };
 		DED7D4ED19547DE80055A2F9 /* BuildingAttributeOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingAttributeOptionViewController.h; sourceTree = "<group>"; };
@@ -212,6 +218,10 @@
 				DEE6CB89195976BE0049A957 /* OSMLoginViewController.m */,
 				DEE6CB8F1959D16C0049A957 /* HomeViewController.h */,
 				DEE6CB901959D16C0049A957 /* HomeViewController.m */,
+				DE637252195B0DEB00914970 /* AboutViewController.h */,
+				DE637253195B0DEB00914970 /* AboutViewController.m */,
+				DE637255195B0DFD00914970 /* LeaderboardTableViewController.h */,
+				DE637256195B0DFD00914970 /* LeaderboardTableViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -487,6 +497,7 @@
 				DEE6CB911959D16C0049A957 /* HomeViewController.m in Sources */,
 				DED7D51419547DE80055A2F9 /* BuildingAttributeText.m in Sources */,
 				DED7D51319547DE80055A2F9 /* BuildingAttributeSelect.m in Sources */,
+				DE637254195B0DEB00914970 /* AboutViewController.m in Sources */,
 				DED7D50F19547DE80055A2F9 /* LuckyModeViewController.m in Sources */,
 				DED7D51619547DE80055A2F9 /* Constants.m in Sources */,
 				DED7D51519547DE80055A2F9 /* APIClient.m in Sources */,
@@ -495,6 +506,7 @@
 				DED7D51919547DE80055A2F9 /* BuildingShape.m in Sources */,
 				DEEB415819502FAA00D4FB07 /* main.m in Sources */,
 				DEE6CB8A195976BE0049A957 /* OSMLoginViewController.m in Sources */,
+				DE637257195B0DFD00914970 /* LeaderboardTableViewController.m in Sources */,
 				DED7D50C19547DE80055A2F9 /* BuildingAttributeOptionViewController.m in Sources */,
 				DED7D51019547DE80055A2F9 /* Building.m in Sources */,
 				DED7D51719547DE80055A2F9 /* LocationController.m in Sources */,

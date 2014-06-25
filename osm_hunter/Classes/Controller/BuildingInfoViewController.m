@@ -76,7 +76,7 @@
         case SECTION_BUILDING_ATTRIBUTES:
             return [self.building.attributes count];
         case SECTION_ACTIONS:
-            return 2;
+            return 1;
         default:
             return 0;
     }
@@ -139,6 +139,7 @@
         BuildingAttributeSelect *attr = (BuildingAttributeSelect *)buildingAttribute;
         cell.textLabel.text = attr.label;
         cell.detailTextLabel.text = attr.value;
+//        NSLog(@"Attr: %@", attr);
         return cell;
     } else {
         return nil;
@@ -149,9 +150,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellAction forIndexPath:indexPath];
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.text = @"Building doesn't have a number";
-            break;
-        case 1:
             cell.textLabel.text = @"Navigate";
             break;
         default:
@@ -195,10 +193,6 @@
     } else if (indexPath.section == 2) {
         switch (indexPath.row) {
             case 0:
-                NSLog(@"Do something");
-                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-                break;
-            case 1:
                 [self navigateToBuilding];
                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
                 break;
@@ -231,7 +225,7 @@
 
 - (IBAction)saveButtonPressed:(id)sender {
     [self.view.window endEditing:YES];
-    [SVProgressHUD showWithStatus:@"Submitting data"];
+    [SVProgressHUD showWithStatus:@"Submitting data" maskType:SVProgressHUDMaskTypeBlack];
     [[APIClient sharedClient] updateBuildingAttributes:self.building.buildingId attributes:[self prepareBuildingAttributes] completion:^(NSDictionary *responseData, NSError *error) {
         [SVProgressHUD dismiss];
         if (!error) {
@@ -260,10 +254,8 @@
 
 - (void)navigateToBuilding {
     MKPlacemark *placeMark = [[MKPlacemark alloc] initWithCoordinate:self.building.shapeCenter addressDictionary:nil];
-    
     MKMapItem *destination =  [[MKMapItem alloc] initWithPlacemark:placeMark];
-//    [destination setName:@"name"];
-    
+    destination.name = [NSString stringWithFormat:@"%.5f, %.5f", self.building.shapeCenter.latitude, self.building.shapeCenter.longitude];
     if ([destination respondsToSelector:@selector(openInMapsWithLaunchOptions:)])
     {
         [destination openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking}];

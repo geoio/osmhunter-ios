@@ -19,7 +19,8 @@
 @property (nonatomic, strong) IBOutlet RMMapView *mapBoxView;
 @property (nonatomic, strong) Building *selectedBuilding;
 @property (nonatomic, strong) CLLocation *currentLocation;
-@property (nonatomic, strong) CLLocation *oldLocation;
+@property (nonatomic) CLLocationCoordinate2D southWest;
+@property (nonatomic) CLLocationCoordinate2D northEast;
 
 @end
 
@@ -77,7 +78,7 @@
     if (self.currentLocation) {
         [self showNavbarLoadingMessage];
         NSMutableArray *annotations = [NSMutableArray array];
-        [[APIClient sharedClient] getBuildingsNearby:self.currentLocation.coordinate limit:kFetchLimit offset:0 completion:^(NSDictionary *responseData, NSError *error) {
+        [[APIClient sharedClient] getBuildingsNearby:self.northEast southWest:self.southWest  userCoordinates:self.currentLocation.coordinate completion:^(NSDictionary *responseData, NSError *error) {
             [self hideNavbarLoadingMessage];
             if (!error) {
                 for (RMAnnotation *annotation in self.mapBoxView.annotations) {
@@ -90,7 +91,7 @@
                     Building *building = [[Building alloc] initWithDictionary:item];
                     RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:self.mapBoxView
                                                                           coordinate:self.mapBoxView.centerCoordinate
-                                                                            andTitle:@"My Path"];
+                                                                            andTitle:nil];
                     annotation.userInfo = building;
                     [annotations addObject:annotation];
                 }
@@ -105,21 +106,21 @@
 
 - (void)showNavbarLoadingMessage {
     UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//    ai.hidesWhenStopped = NO; //I added this just so I could see it
     [ai startAnimating];
-    self.navigationItem.title = @"Loading data";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:ai];
+    self.navigationItem.title = @"Loading data...";
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:ai];
 }
 
 - (void)hideNavbarLoadingMessage {
     self.navigationItem.title = nil;
-    self.navigationItem.rightBarButtonItem = nil;
+//    self.navigationItem.rightBarButtonItem = nil;
 }
 
-- (void) drawCurrentUserLocation {
-    
+- (IBAction)userLocationButtonPressed:(id)sender {
+    [self.mapBoxView setZoom:17 animated:YES];
+    [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
+//    [self fetchResults];
 }
-
 
 #pragma mark RMMapViewDelegate
 
@@ -166,6 +167,14 @@
     }
 }
 
+- (void)afterMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction {
+    if (wasUserAction == YES) {
+        self.northEast = self.mapBoxView.latitudeLongitudeBoundingBox.northEast;
+        self.southWest = self.mapBoxView.latitudeLongitudeBoundingBox.southWest;
+        [self fetchResults];
+    }
+}
+
 #pragma mark LocationController delegate
 
 - (void)didUpdateLocation:(CLLocation *)location {
@@ -173,18 +182,11 @@
         self.currentLocation = location;
         [self.mapBoxView setZoom:17 animated:YES];
         [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
+        self.northEast = self.mapBoxView.latitudeLongitudeBoundingBox.northEast;
+        self.southWest = self.mapBoxView.latitudeLongitudeBoundingBox.southWest;
         [self fetchResults];
     }
-    if (!self.oldLocation) {
-        self.oldLocation = location;
-    }
-    
-    CLLocationDistance distance = [self.oldLocation distanceFromLocation:self.currentLocation];
-    if (distance > 100) {
-        [self fetchResults];
-        self.oldLocation = self.currentLocation;
-        [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
-    }
+
     self.currentLocation = location;
 }
 

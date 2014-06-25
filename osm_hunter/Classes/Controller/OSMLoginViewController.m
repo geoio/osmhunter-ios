@@ -44,6 +44,8 @@
             NSString *sessionId = data[@"result"][@"session_id"];
             [[SettingsManager sharedInstance] setSessionId:sessionId];
             [self.webView loadRequest:[NSURLRequest requestWithURL:redirectURL]];
+        } else {
+            NSLog(@"Error: %@", error);
         }
     }];
 }

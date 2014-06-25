@@ -11,7 +11,13 @@
 
 + (SettingsManager *) sharedInstance;
 
-@property (nonatomic, strong) NSString *sessionId;
-@property (nonatomic, strong) NSString *apiKey;
+@property (nonatomic, copy) NSString *sessionId;
+@property (nonatomic, copy) NSString *apiKey;
+
+@property (nonatomic, copy) NSString *userName;
+@property (nonatomic, copy) NSString *userPoints;
+@property (nonatomic, readonly) UIImage *userImage;
+
+- (void)updateUserInfoWithCompletion:(void (^)(BOOL success, NSError *error))completion;
 
 @end

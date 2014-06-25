@@ -8,12 +8,14 @@
 
 #import "Constants.h"
 
-NSString *const kAPIBaseUrl = @"http://osmhunter.felixwittmann.de";
-NSString *const kAPIDateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+NSString *const kAPIBaseUrl = @"http://osmhunter.geo.io/api/v1/";
+NSString *const kAppAboutUrl = @"http://geo.io/pages/imprint/";
 
 NSString *const kKeychainServiceName = @"io.geo.osmhunter";
 
 NSString *const kSettingsSessionId = @"settings.sessionId";
+NSString *const kSettingsUserName = @"settings.userName";
+NSString *const kSettingsUserPoints = @"settings.userPoints";
 
 NSString *const kMapBoxMapId = @"geoio.hlo440ja";
 int const kFetchLimit = 50;
@@ -29,6 +31,7 @@ NSString *const kCellText = @"cellText";
 NSString *const kCellSelect = @"cellSelect";
 NSString *const kCellAction = @"cellAction";
 NSString *const kCellAttribureOptionValue = @"cellAttribureOptionValue";
+NSString *const kCellLeader = @"cellLeader";
 
 NSString *const kStoryboardLoginIPhone = @"Login_iPhone";
 NSString *const kStoryboardMainIPhone = @"Main_iPhone";

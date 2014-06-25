@@ -7,12 +7,13 @@
 //
 
 extern NSString * const kAPIBaseUrl;
-
-extern NSString * const kAPIDateFormat;
+extern NSString * const kAppAboutUrl;
 
 extern NSString * const kKeychainServiceName;
 
 extern NSString * const kSettingsSessionId;
+extern NSString * const kSettingsUserName;
+extern NSString * const kSettingsUserPoints;
 
 extern NSString * const kMapBoxMapId;
 extern int const kFetchLimit;
@@ -28,6 +29,7 @@ extern NSString * const kCellText;
 extern NSString * const kCellSelect;
 extern NSString * const kCellAction;
 extern NSString * const kCellAttribureOptionValue;
+extern NSString * const kCellLeader;
 
 extern NSString * const kStoryboardLoginIPhone;
 extern NSString * const kStoryboardMainIPhone;

@@ -8,6 +8,8 @@
 
 #import "SettingsManager.h"
 #import "SSKeychain.h"
+#import "APIClient.h"
+#import "UIImage+Resize.h"
 
 @implementation SettingsManager
 
@@ -45,6 +47,74 @@
     if (self.sessionId) {
         [SSKeychain setPassword:apiKey forService:kKeychainServiceName account:self.sessionId];
     }
+}
+
+- (NSString *)userName {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults valueForKey:kSettingsUserName];
+}
+
+- (void)setUserName:(NSString *)userName {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:userName forKey:kSettingsUserName];
+    [defaults synchronize];
+}
+
+- (NSString *)userPoints {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults valueForKey:kSettingsUserPoints];
+}
+
+- (void)setUserPoints:(NSString *)userPoints {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:userPoints forKey:kSettingsUserPoints];
+    [defaults synchronize];
+}
+
+- (UIImage *)userImage {
+    return [UIImage imageWithContentsOfFile:[self userImagePath]];
+}
+
+- (void)updateUserInfoWithCompletion:(void (^)(BOOL success, NSError *error))completion {
+    [[APIClient sharedClient] getUserInfoWithCompletion:^(NSDictionary *data, NSError *error) {
+        if (data) {
+            NSURL *imageUrl = [NSURL URLWithString:data[@"result"][@"image"]];
+            NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
+            UIImage *img = [UIImage imageWithData:imageData];
+            UIImage *userImage = [img thumbnailImage:120 transparentBorder:0 cornerRadius:15 interpolationQuality:kCGInterpolationDefault];
+
+            imageData = UIImagePNGRepresentation(userImage);
+            
+            
+            if (![imageData writeToFile:[self userImagePath] atomically:NO]) {
+                NSLog((@"Failed to save image data to disk"));
+            } else {
+                NSLog(@"User image saved.");
+            }
+            
+            self.userName = data[@"result"][@"display_name"];
+            self.userPoints = [NSString stringWithFormat:@"%@ points", [data[@"result"][@"points"] stringValue]];
+            if (completion) {
+                completion(YES, nil);
+            }
+            
+        } else {
+            NSLog(@"Error: %@", error);
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
+}
+
+- (NSString *)userImagePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:@"userAvatar.png"];
+    return imagePath;
 }
 
 @end

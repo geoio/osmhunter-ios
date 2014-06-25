@@ -24,4 +24,8 @@
     
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"Name: %@; Value: %@; Label: %@; Prefilled: %hhd", self.name, self.value, self.label, self.prefilled];
+}
+
 @end

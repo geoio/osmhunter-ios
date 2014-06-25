@@ -18,6 +18,8 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardLoginIPhone bundle:nil];
         UIViewController *viewController = [storyboard instantiateInitialViewController];
         self.window.rootViewController = viewController;
+    } else {
+        [[SettingsManager sharedInstance] updateUserInfoWithCompletion:nil];
     }
     
     return YES;

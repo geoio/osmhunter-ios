@@ -7,7 +7,7 @@
 //
 
 #import <Mapbox/Mapbox.h>
-#import "SVProgressHUD.h"
+#import <MapKit/MapKit.h>
 #import "LuckyModeViewController.h"
 #import "BuildingInfoViewController.h"
 #import "LocationController.h"
@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *nextBuildingButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *previousBuildingButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *navigateButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *distanceButton;
 
 
 @property (nonatomic, strong) IBOutlet RMMapView *mapBoxView;
@@ -47,6 +49,8 @@
 - (void)setCurrentBuilding:(Building *)newBuilding {
     if (_currentBuilding != newBuilding) {
         _currentBuilding = newBuilding;
+        self.navigateButton.enabled = YES;
+        self.distanceButton.title = [NSString stringWithFormat:@"%.2fkm", newBuilding.distance];
         [self drawCurrentBuilding];
     }
 }
@@ -65,6 +69,8 @@
     self.currentOffset = 0;
     self.currentBuildingIndex = 0;
     self.previousBuildingButton.enabled= NO;
+    self.navigateButton.enabled = NO;
+    self.distanceButton.title = @"";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -77,7 +83,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.mapBoxView.showsUserLocation = NO;
-    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,6 +104,16 @@
     [self showPreviousBuilding];
 }
 
+- (IBAction)navigateButtonPressed:(id)sender {
+    MKPlacemark *placeMark = [[MKPlacemark alloc] initWithCoordinate:self.currentBuilding.shapeCenter addressDictionary:nil];
+    MKMapItem *destination =  [[MKMapItem alloc] initWithPlacemark:placeMark];
+    destination.name = [NSString stringWithFormat:@"%.5f, %.5f", self.currentBuilding.shapeCenter.latitude, self.currentBuilding.shapeCenter.longitude];
+    if ([destination respondsToSelector:@selector(openInMapsWithLaunchOptions:)])
+    {
+        [destination openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking}];
+    }
+}
+
 - (void)showNextBuilding {
     if (self.currentBuildingIndex + 1 < self.buildings.count) {
         self.currentBuildingIndex++;
@@ -109,9 +124,9 @@
         if (!self.buildings) {
             self.buildings = [NSMutableArray array];
         }
-        [SVProgressHUD showWithStatus:@"Loading data"];
+        [self showNavbarLoadingMessage];
         [[APIClient sharedClient] getBuildingsNearby:self.currentLocation.coordinate limit:kFetchLimit offset:self.currentOffset completion:^(NSDictionary *responseData, NSError *error) {
-            [SVProgressHUD dismiss];
+            [self hideNavbarLoadingMessage];
             if (!error) {
                 NSArray *results = responseData[@"results"];
                 if (results.count > 0) {
@@ -168,6 +183,18 @@
     [self.mapBoxView setCenterCoordinate:self.currentBuilding.shapeCenter];
 }
 
+- (void)showNavbarLoadingMessage {
+    UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [ai startAnimating];
+    self.navigationItem.title = @"Loading data";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:ai];
+}
+
+- (void)hideNavbarLoadingMessage {
+    self.navigationItem.title = nil;
+    self.navigationItem.rightBarButtonItem = nil;
+}
+
 #pragma mark RMMapViewDelegate
 
 - (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
@@ -191,9 +218,9 @@
 
 - (void)mapView:(RMMapView *)mapView didSelectAnnotation:(RMAnnotation *)annotation {
     self.selectedBuilding = (Building *)annotation.userInfo;
-    [SVProgressHUD showWithStatus:@"Loading data"];
+    [self showNavbarLoadingMessage];
     [[APIClient sharedClient] getBuildingAttributes:self.selectedBuilding.buildingId completion:^(NSDictionary *responseData, NSError *error) {
-        [SVProgressHUD dismiss];
+        [self hideNavbarLoadingMessage];
         if (!error) {
             [self.selectedBuilding loadAttributesFromDictionary:responseData];
             [self performSegueWithIdentifier:kSegueShowBuildingInfo sender:self];
