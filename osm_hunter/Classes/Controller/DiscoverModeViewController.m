@@ -7,6 +7,7 @@
 //
 
 #import <Mapbox/Mapbox.h>
+#import <ALAlertBanner/ALAlertBanner.h>
 #import "UIImage+Rotate.h"
 #import "DiscoverModeViewController.h"
 #import "BuildingInfoViewController.h"
@@ -14,31 +15,34 @@
 #import "APIClient.h"
 #import "Building.h"
 
+
+#define MIN_FETCH_ZOOM_LEVEL 15
+
+
 @interface DiscoverModeViewController () <RMMapViewDelegate, LocationControllerDelegate>
 
-@property (nonatomic, strong) IBOutlet RMMapView *mapBoxView;
-@property (nonatomic, strong) Building *selectedBuilding;
-@property (nonatomic, strong) CLLocation *currentLocation;
-@property (nonatomic) CLLocationCoordinate2D southWest;
-@property (nonatomic) CLLocationCoordinate2D northEast;
+@property(nonatomic, strong) IBOutlet RMMapView *mapBoxView;
+@property(nonatomic, strong) Building *selectedBuilding;
+@property(nonatomic, strong) CLLocation *currentLocation;
+
+@property(nonatomic) CLLocationCoordinate2D northEast;
+@property(nonatomic) CLLocationCoordinate2D southWest;
 
 @end
 
 @implementation DiscoverModeViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     RMMapboxSource *mapBoxTileSource = [[RMMapboxSource alloc] initWithMapID:kMapBoxMapId];
     self.mapBoxView = [[RMMapView alloc] initWithFrame:self.view.frame andTilesource:mapBoxTileSource];
     self.mapBoxView.userTrackingMode = RMUserTrackingModeFollowWithHeading;
@@ -49,10 +53,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+
     [[LocationController sharedInstance] setDelegate:self];
     [[LocationController sharedInstance] start];
-    
+
     [[LocationController sharedInstance] checkLocationServicesTurnedOn];
     [[LocationController sharedInstance] checkApplicationHasLocationServicesPermission];
 }
@@ -63,14 +67,11 @@
     [[LocationController sharedInstance] stop];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     self.mapBoxView.frame = self.view.frame;
 }
 
@@ -78,7 +79,7 @@
     if (self.currentLocation) {
         [self showNavbarLoadingMessage];
         NSMutableArray *annotations = [NSMutableArray array];
-        [[APIClient sharedClient] getBuildingsNearby:self.northEast southWest:self.southWest  userCoordinates:self.currentLocation.coordinate completion:^(NSDictionary *responseData, NSError *error) {
+        [[APIClient sharedClient] getBuildingsNearby:self.northEast southWest:self.southWest userCoordinates:self.currentLocation.coordinate completion:^(NSDictionary *responseData, NSError *error) {
             [self hideNavbarLoadingMessage];
             if (!error) {
                 for (RMAnnotation *annotation in self.mapBoxView.annotations) {
@@ -95,7 +96,7 @@
                     annotation.userInfo = building;
                     [annotations addObject:annotation];
                 }
-                
+
                 [self.mapBoxView addAnnotations:annotations];
             } else {
                 NSLog(@"Error: %@", error);
@@ -119,31 +120,29 @@
 - (IBAction)userLocationButtonPressed:(id)sender {
     [self.mapBoxView setZoom:17 animated:YES];
     [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
-//    [self fetchResults];
+    [self fetchResults];
 }
 
 #pragma mark RMMapViewDelegate
 
-- (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
-{
+- (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation {
     if (annotation.isUserLocationAnnotation)
         return nil;
-    
+
     if ([annotation.userInfo isKindOfClass:[Building class]]) {
-        Building *building = (Building *)annotation.userInfo;
-        //    BuildingShape *shape = [BuildingShape shapeForBuilding:building];
+        Building *building = (Building *) annotation.userInfo;
         RMShape *shape = [[RMShape alloc] initWithView:self.mapBoxView];
-        
+
         shape.lineColor = [UIColor yellowColor];
         shape.lineWidth = 2.0;
         shape.fillColor = [UIColor purpleColor];
-        
+
         for (CLLocation *point in building.shapeNodes)
             [shape addLineToCoordinate:point.coordinate];
-        
+
         return shape;
     } else {
-        CLHeading *heading = (CLHeading *)annotation.userInfo;
+        CLHeading *heading = (CLHeading *) annotation.userInfo;
         UIImage *headingArrow = [[UIImage imageNamed:@"heading_arrow"] imageRotatedByDegrees:heading.magneticHeading];
         RMMarker *userLocationMarker = [[RMMarker alloc] initWithUIImage:headingArrow];
         userLocationMarker.annotation = annotation;
@@ -153,7 +152,7 @@
 
 - (void)mapView:(RMMapView *)mapView didSelectAnnotation:(RMAnnotation *)annotation {
     if ([annotation.userInfo isKindOfClass:[Building class]]) {
-        self.selectedBuilding = (Building *)annotation.userInfo;
+        self.selectedBuilding = (Building *) annotation.userInfo;
         [self showNavbarLoadingMessage];
         [[APIClient sharedClient] getBuildingAttributes:self.selectedBuilding.buildingId completion:^(NSDictionary *responseData, NSError *error) {
             [self hideNavbarLoadingMessage];
@@ -168,10 +167,39 @@
 }
 
 - (void)afterMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction {
-    if (wasUserAction == YES) {
-        self.northEast = self.mapBoxView.latitudeLongitudeBoundingBox.northEast;
-        self.southWest = self.mapBoxView.latitudeLongitudeBoundingBox.southWest;
-        [self fetchResults];
+    //    NSLog(@"Zoom: %.2f", self.mapBoxView.zoom);
+    if (wasUserAction) {
+        if (map.zoom > MIN_FETCH_ZOOM_LEVEL) {
+            self.southWest = map.latitudeLongitudeBoundingBox.southWest;
+            self.northEast = map.latitudeLongitudeBoundingBox.northEast;
+            [self fetchResults];
+            
+        } else {
+            ALAlertBanner *banner = [ALAlertBanner alertBannerForView:self.view
+                                                                style:ALAlertBannerStyleNotify
+                                                             position:ALAlertBannerPositionTop
+                                                                title:@"Please zoom in to load data"
+                                                             subtitle:nil];
+            [banner show];
+        }
+    }
+}
+
+- (void)afterMapZoom:(RMMapView *)map byUser:(BOOL)wasUserAction {
+    if (wasUserAction) {
+        if (map.zoom > MIN_FETCH_ZOOM_LEVEL) {
+            self.southWest = map.latitudeLongitudeBoundingBox.southWest;
+            self.northEast = map.latitudeLongitudeBoundingBox.northEast;
+            [self fetchResults];
+            
+        } else {
+            ALAlertBanner *banner = [ALAlertBanner alertBannerForView:self.view
+                                                                style:ALAlertBannerStyleNotify
+                                                             position:ALAlertBannerPositionTop
+                                                                title:@"Please zoom in to load data"
+                                                             subtitle:nil];
+            [banner show];
+        }
     }
 }
 

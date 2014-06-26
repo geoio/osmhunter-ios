@@ -49,6 +49,7 @@
                                            }
                                        }
                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Error: %@", task.response);
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                completion(nil, error);
                                            });
@@ -76,6 +77,7 @@
                                            }
                                        }
                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Error: %@", task.response);
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                completion(nil, error);
                                            });
@@ -94,7 +96,8 @@
                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                     completion(responseObject, nil);
                                                 });
-                                            } else {
+                                            }
+                                            else {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                     completion(nil, nil);
                                                 });
@@ -103,9 +106,15 @@
                                             }
                                         }
                                         failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                completion(nil, error);
-                                            });
+                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task.response;
+                                            if (httpResponse.statusCode == 401) {
+                                                [[SettingsManager sharedInstance] showAuthView];
+                                            } else {
+                                                NSLog(@"Error: %@", task.response);
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    completion(nil, error);
+                                                });
+                                            }
                                         }];
     return dataTask;
 }
@@ -130,6 +139,7 @@
                                            }
                                        }
                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Error: %@", task.response);
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                completion(nil, error);
                                            });
@@ -177,6 +187,7 @@
                              @"north": [NSNumber numberWithDouble:northEast.latitude],
                              @"east": [NSNumber numberWithDouble:northEast.longitude]
                              };
+    NSLog(@"Params: %@", params);
     NSURLSessionDataTask *dataTask = [self GET:@"buildings/"
                                     parameters:params
                                        success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -194,6 +205,7 @@
                                            }
                                        }
                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Error: %@", task.response);
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                completion(nil, error);
                                            });
@@ -221,6 +233,7 @@
                                            }
                                        }
                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Error: %@", task.response);
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                completion(nil, error);
                                            });
@@ -247,6 +260,7 @@
                                            }
                                        }
                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Error: %@", task.response);
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                completion(nil, error);
                                            });
@@ -275,6 +289,7 @@
                                            }
                                        }
                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Error: %@", task.response);
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                completion(nil, error);
                                            });

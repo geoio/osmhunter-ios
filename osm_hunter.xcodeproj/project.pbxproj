@@ -117,7 +117,7 @@
 		DEEB415B19502FAA00D4FB07 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DEEB415E19502FAA00D4FB07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		DEEB416119502FAA00D4FB07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		DEEB416919502FAA00D4FB07 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DEEB416919502FAA00D4FB07 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		DEEB416F19502FAA00D4FB07 /* osm_hunterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = osm_hunterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEEB417019502FAA00D4FB07 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DEEB417819502FAA00D4FB07 /* osm_hunterTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "osm_hunterTests-Info.plist"; sourceTree = "<group>"; };
@@ -175,6 +175,7 @@
 		DED7D4E719547D570055A2F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DEEB416919502FAA00D4FB07 /* Images.xcassets */,
 				DED7D4E819547D570055A2F9 /* GPX */,
 			);
 			path = Resources;
@@ -317,7 +318,6 @@
 				DEE6CB8E1959C91C0049A957 /* iPad */,
 				DEEB415A19502FAA00D4FB07 /* AppDelegate.h */,
 				DEEB415B19502FAA00D4FB07 /* AppDelegate.m */,
-				DEEB416919502FAA00D4FB07 /* Images.xcassets */,
 				DEEB415219502FAA00D4FB07 /* Supporting Files */,
 			);
 			path = osm_hunter;
@@ -654,8 +654,8 @@
 				INFOPLIST_FILE = "osm_hunter/osm_hunter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5971B9AB-5BF4-470F-9D36-23BAFCEDE1A6";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "5EC05DC3-57BC-4B9D-99DA-E43ACB231E18";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -673,8 +673,8 @@
 				INFOPLIST_FILE = "osm_hunter/osm_hunter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5971B9AB-5BF4-470F-9D36-23BAFCEDE1A6";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "B6E15672-D101-4C63-B74C-538B217A65F7";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

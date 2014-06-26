@@ -5,6 +5,7 @@ inhibit_all_warnings!
 
 pod 'AFNetworking', '~> 2.0.1'
 pod 'SVProgressHUD'
+pod 'ALAlertBanner'
 pod 'SSKeychain'
 pod 'UIImage-Categories'
 pod 'MapBox'

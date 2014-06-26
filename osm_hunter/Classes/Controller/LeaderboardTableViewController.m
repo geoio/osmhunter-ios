@@ -94,13 +94,13 @@
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ points", leaderItem[@"points"]];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     
+    NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:leaderItem[@"image"]]];
+    UIImage *userImage = [UIImage imageWithData: imageData];
+    
+    cell.imageView.image = [userImage thumbnailImage:100 transparentBorder:0 cornerRadius:50 interpolationQuality:kCGInterpolationDefault];
+    
     if ([leaderItem[@"myself"] intValue] == 1) {
-        UIImage *userImage = [[SettingsManager sharedInstance] userImage];
-        cell.imageView.image = [userImage thumbnailImage:100 transparentBorder:0 cornerRadius:50 interpolationQuality:kCGInterpolationDefault];
         cell.backgroundColor = [UIColor colorWithRed:98/255.0 green:147/255.9 blue:157/255.0 alpha:0.1];
-    } else {
-        UIImage *userImage = [UIImage imageNamed:@"user_placeholder"];
-        cell.imageView.image = [userImage thumbnailImage:100 transparentBorder:0 cornerRadius:50 interpolationQuality:kCGInterpolationDefault];
     }
     
     return cell;

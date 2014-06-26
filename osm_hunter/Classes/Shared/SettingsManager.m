@@ -117,4 +117,10 @@
     return imagePath;
 }
 
+- (void)showAuthView {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardLoginIPhone bundle:nil];
+    UIViewController *viewController = [storyboard instantiateInitialViewController];
+    [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+}
+
 @end

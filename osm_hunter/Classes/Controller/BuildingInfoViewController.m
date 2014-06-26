@@ -177,7 +177,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (section) {
         case SECTION_BUILDING_ATTRIBUTES:
-            return @"Warning! Purple text is for prefilled fields";
+            return @"Attention: Please verify purple prefilled fields";
         default:
             return @"";
     }

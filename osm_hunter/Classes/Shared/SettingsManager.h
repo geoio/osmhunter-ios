@@ -20,4 +20,6 @@
 
 - (void)updateUserInfoWithCompletion:(void (^)(BOOL success, NSError *error))completion;
 
+- (void)showAuthView;
+
 @end
