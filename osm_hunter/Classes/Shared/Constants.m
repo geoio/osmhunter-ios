@@ -34,4 +34,4 @@ NSString *const kCellAttribureOptionValue = @"cellAttribureOptionValue";
 NSString *const kCellLeader = @"cellLeader";
 
 NSString *const kStoryboardLogin = @"Login";
-NSString *const kStoryboardMainIPhone = @"Main_iPhone";
+NSString *const kStoryboardMainIPhoneIPad = @"Main_iPhone_iPad";

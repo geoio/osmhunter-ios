@@ -32,4 +32,4 @@ extern NSString * const kCellAttribureOptionValue;
 extern NSString * const kCellLeader;
 
 extern NSString * const kStoryboardLogin;
-extern NSString * const kStoryboardMainIPhone;
+extern NSString * const kStoryboardMainIPhoneIPad;

@@ -13,7 +13,6 @@
 		DE4CF6E11958661B00CCF6B1 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4CF6D91958661B00CCF6B1 /* UIImage+Rotate.m */; };
 		DE637254195B0DEB00914970 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE637253195B0DEB00914970 /* AboutViewController.m */; };
 		DE637257195B0DFD00914970 /* LeaderboardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE637256195B0DFD00914970 /* LeaderboardTableViewController.m */; };
-		DE93E61619619C29004124E4 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE93E61519619C29004124E4 /* Main_iPad.storyboard */; };
 		DED7D50C19547DE80055A2F9 /* BuildingAttributeOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4EE19547DE80055A2F9 /* BuildingAttributeOptionViewController.m */; };
 		DED7D50D19547DE80055A2F9 /* BuildingInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4F019547DE80055A2F9 /* BuildingInfoViewController.m */; };
 		DED7D50E19547DE80055A2F9 /* DiscoverModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DED7D4F219547DE80055A2F9 /* DiscoverModeViewController.m */; };
@@ -37,7 +36,7 @@
 		DEEB415619502FAA00D4FB07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DEEB415419502FAA00D4FB07 /* InfoPlist.strings */; };
 		DEEB415819502FAA00D4FB07 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEEB415719502FAA00D4FB07 /* main.m */; };
 		DEEB415C19502FAA00D4FB07 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEEB415B19502FAA00D4FB07 /* AppDelegate.m */; };
-		DEEB415F19502FAA00D4FB07 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEEB415D19502FAA00D4FB07 /* Main_iPhone.storyboard */; };
+		DEEB415F19502FAA00D4FB07 /* Main_iPhone_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEEB415D19502FAA00D4FB07 /* Main_iPhone_iPad.storyboard */; };
 		DEEB416A19502FAA00D4FB07 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEEB416919502FAA00D4FB07 /* Images.xcassets */; };
 		DEEB417119502FAA00D4FB07 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEEB417019502FAA00D4FB07 /* XCTest.framework */; };
 		DEEB417219502FAA00D4FB07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEEB414B19502FAA00D4FB07 /* Foundation.framework */; };
@@ -69,7 +68,6 @@
 		DE637253195B0DEB00914970 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		DE637255195B0DFD00914970 /* LeaderboardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderboardTableViewController.h; sourceTree = "<group>"; };
 		DE637256195B0DFD00914970 /* LeaderboardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderboardTableViewController.m; sourceTree = "<group>"; };
-		DE93E61519619C29004124E4 /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
 		DED7D4E919547D570055A2F9 /* Deichstraße 27.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Deichstraße 27.gpx"; sourceTree = "<group>"; };
 		DED7D4EA19547D570055A2F9 /* Track_1.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Track_1.gpx; sourceTree = "<group>"; };
 		DED7D4ED19547DE80055A2F9 /* BuildingAttributeOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingAttributeOptionViewController.h; sourceTree = "<group>"; };
@@ -116,7 +114,7 @@
 		DEEB415919502FAA00D4FB07 /* osm_hunter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "osm_hunter-Prefix.pch"; sourceTree = "<group>"; };
 		DEEB415A19502FAA00D4FB07 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DEEB415B19502FAA00D4FB07 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DEEB415E19502FAA00D4FB07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		DEEB415E19502FAA00D4FB07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone_iPad.storyboard; sourceTree = "<group>"; };
 		DEEB416919502FAA00D4FB07 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		DEEB416F19502FAA00D4FB07 /* osm_hunterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = osm_hunterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEEB417019502FAA00D4FB07 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -165,8 +163,7 @@
 		DEC344D319504A9D00B9FC68 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				DEEB415D19502FAA00D4FB07 /* Main_iPhone.storyboard */,
-				DE93E61519619C29004124E4 /* Main_iPad.storyboard */,
+				DEEB415D19502FAA00D4FB07 /* Main_iPhone_iPad.storyboard */,
 				DE4CF6C219582BCA00CCF6B1 /* Login.storyboard */,
 			);
 			name = UI;
@@ -433,9 +430,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE93E61619619C29004124E4 /* Main_iPad.storyboard in Resources */,
 				DEEB416A19502FAA00D4FB07 /* Images.xcassets in Resources */,
-				DEEB415F19502FAA00D4FB07 /* Main_iPhone.storyboard in Resources */,
+				DEEB415F19502FAA00D4FB07 /* Main_iPhone_iPad.storyboard in Resources */,
 				DEEB415619502FAA00D4FB07 /* InfoPlist.strings in Resources */,
 				DE4CF6C319582BCA00CCF6B1 /* Login.storyboard in Resources */,
 			);
@@ -542,12 +538,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		DEEB415D19502FAA00D4FB07 /* Main_iPhone.storyboard */ = {
+		DEEB415D19502FAA00D4FB07 /* Main_iPhone_iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				DEEB415E19502FAA00D4FB07 /* Base */,
 			);
-			name = Main_iPhone.storyboard;
+			name = Main_iPhone_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		DEEB417919502FAA00D4FB07 /* InfoPlist.strings */ = {

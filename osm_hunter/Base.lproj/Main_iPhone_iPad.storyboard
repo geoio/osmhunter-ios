@@ -31,7 +31,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_start" translatesAutoresizingMaskIntoConstraints="NO" id="YLR-9N-Ztj" userLabel="background">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_home" translatesAutoresizingMaskIntoConstraints="NO" id="YLR-9N-Ztj" userLabel="background">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -534,7 +534,7 @@
     </scenes>
     <resources>
         <image name="bg_button" width="1" height="1"/>
-        <image name="bg_start" width="320" height="568"/>
+        <image name="bg_home" width="1024" height="768"/>
         <image name="crosshairs" width="22" height="22"/>
         <image name="geoio-logo-white" width="132" height="50"/>
         <image name="user_placeholder" width="128" height="128"/>

@@ -66,7 +66,7 @@
             [[APIClient sharedClient] getApiKeyForSessionId:sessionId oauthToken:oauthToken completion:^(NSDictionary *data, NSError *error) {
                 if (data) {
                     [[SettingsManager sharedInstance] setApiKey:data[@"result"][@"apikey"]];
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardMainIPhone bundle:nil];
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardMainIPhoneIPad bundle:nil];
                     UIViewController *viewController = [storyboard instantiateInitialViewController];
                     [self presentViewController:viewController animated:YES completion:nil];
                 } else {
