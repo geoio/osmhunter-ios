@@ -15,7 +15,7 @@
 {    
     // Override first storyboard
     if (![[SettingsManager sharedInstance] apiKey]) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardLoginIPhone bundle:nil];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardLogin bundle:nil];
         UIViewController *viewController = [storyboard instantiateInitialViewController];
         self.window.rootViewController = viewController;
     } else {

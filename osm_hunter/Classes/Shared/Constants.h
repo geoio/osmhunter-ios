@@ -31,5 +31,5 @@ extern NSString * const kCellAction;
 extern NSString * const kCellAttribureOptionValue;
 extern NSString * const kCellLeader;
 
-extern NSString * const kStoryboardLoginIPhone;
+extern NSString * const kStoryboardLogin;
 extern NSString * const kStoryboardMainIPhone;

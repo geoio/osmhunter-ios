@@ -33,5 +33,5 @@ NSString *const kCellAction = @"cellAction";
 NSString *const kCellAttribureOptionValue = @"cellAttribureOptionValue";
 NSString *const kCellLeader = @"cellLeader";
 
-NSString *const kStoryboardLoginIPhone = @"Login_iPhone";
+NSString *const kStoryboardLogin = @"Login";
 NSString *const kStoryboardMainIPhone = @"Main_iPhone";
