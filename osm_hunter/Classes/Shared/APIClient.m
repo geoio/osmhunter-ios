@@ -187,7 +187,7 @@
                              @"north": [NSNumber numberWithDouble:northEast.latitude],
                              @"east": [NSNumber numberWithDouble:northEast.longitude]
                              };
-    NSLog(@"Params: %@", params);
+//    NSLog(@"Params: %@", params);
     NSURLSessionDataTask *dataTask = [self GET:@"buildings/"
                                     parameters:params
                                        success:^(NSURLSessionDataTask *task, id responseObject) {

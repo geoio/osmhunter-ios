@@ -66,11 +66,11 @@
 
 - (void)viewWillLayoutSubviews {
     if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-        NSLog(@"Layout horizontal");
+//        NSLog(@"Layout horizontal");
         [self.view removeConstraints:self.iPhoneVerticalConstraints];
         [self.view addConstraints:self.iPhoneHorizontalConstraints];
     } else {
-        NSLog(@"Layout vertical");
+//        NSLog(@"Layout vertical");
         [self.view removeConstraints:self.iPhoneHorizontalConstraints];
         [self.view addConstraints:self.iPhoneVerticalConstraints];
     }

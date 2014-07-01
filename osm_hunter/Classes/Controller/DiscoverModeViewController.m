@@ -47,6 +47,7 @@
     self.mapBoxView = [[RMMapView alloc] initWithFrame:self.contentView.frame andTilesource:mapBoxTileSource];
     self.mapBoxView.userTrackingMode = RMUserTrackingModeFollowWithHeading;
     self.mapBoxView.showsUserLocation = NO;
+    self.mapBoxView.displayHeadingCalibration = YES;
     self.mapBoxView.delegate = self;
     [self.contentView addSubview:self.mapBoxView];
 }
