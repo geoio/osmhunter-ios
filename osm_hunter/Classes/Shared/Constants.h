@@ -8,6 +8,8 @@
 
 extern NSString * const kAPIBaseUrl;
 extern NSString * const kAppAboutUrl;
+extern NSString * const kAppColorMain;
+extern NSString * const kAppColorBuildingBackground;
 
 extern NSString * const kKeychainServiceName;
 

@@ -9,7 +9,9 @@
 #import "Constants.h"
 
 NSString *const kAPIBaseUrl = @"http://osmhunter.geo.io/api/v1/";
-NSString *const kAppAboutUrl = @"http://geo.io/pages/imprint/";
+NSString *const kAppAboutUrl = @"http://http://osmhunter.geo.io/";
+NSString *const kAppColorMain = @"#62939d";
+NSString *const kAppColorBuildingBackground = @"#bcd6db";
 
 NSString *const kKeychainServiceName = @"io.geo.osmhunter";
 

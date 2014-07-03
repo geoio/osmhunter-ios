@@ -13,6 +13,7 @@
 #import "LocationController.h"
 #import "APIClient.h"
 #import "Building.h"
+#import "UIColor+HTMLColors.h"
 
 
 #define MIN_FETCH_ZOOM_LEVEL 15
@@ -134,9 +135,9 @@
         Building *building = (Building *) annotation.userInfo;
         RMShape *shape = [[RMShape alloc] initWithView:self.mapBoxView];
 
-        shape.lineColor = [UIColor yellowColor];
-        shape.lineWidth = 2.0;
-        shape.fillColor = [UIColor purpleColor];
+        shape.lineColor = [UIColor colorWithCSS:kAppColorMain];
+        shape.lineWidth = 2.0f;
+        shape.fillColor = [UIColor colorWithCSS:kAppColorBuildingBackground];
 
         for (CLLocation *point in building.shapeNodes)
             [shape addLineToCoordinate:point.coordinate];
@@ -144,7 +145,8 @@
         return shape;
     } else {
         CLHeading *heading = (CLHeading *) annotation.userInfo;
-        UIImage *headingArrow = [[UIImage imageNamed:@"icon_positioner_compass"] imageRotatedByDegrees:heading.magneticHeading];
+//        UIImage *headingArrow = [[UIImage imageNamed:@"icon_positioner_compass"] imageRotatedByDegrees:heading.magneticHeading];
+        UIImage *headingArrow = [[UIImage imageNamed:@"heading"] imageRotatedByDegrees:heading.magneticHeading];
         RMMarker *userLocationMarker = [[RMMarker alloc] initWithUIImage:headingArrow];
         userLocationMarker.annotation = annotation;
         return userLocationMarker;

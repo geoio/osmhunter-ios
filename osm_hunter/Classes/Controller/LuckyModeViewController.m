@@ -14,6 +14,7 @@
 #import "APIClient.h"
 #import "Building.h"
 #import "LocationController.h"
+#import "UIColor+HTMLColors.h"
 
 @interface LuckyModeViewController () <RMMapViewDelegate>
 
@@ -206,9 +207,9 @@
     Building *building = (Building *)annotation.userInfo;
     RMShape *shape = [[RMShape alloc] initWithView:self.mapBoxView];
     
-    shape.lineColor = [UIColor yellowColor];
-    shape.lineWidth = 2.0;
-    shape.fillColor = [UIColor purpleColor];
+    shape.lineColor = [UIColor colorWithCSS:kAppColorMain];
+    shape.lineWidth = 2.0f;
+    shape.fillColor = [UIColor colorWithCSS:kAppColorBuildingBackground];
     
     for (CLLocation *point in building.shapeNodes)
         [shape addLineToCoordinate:point.coordinate];
