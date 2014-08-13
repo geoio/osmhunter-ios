@@ -212,34 +212,6 @@
     return dataTask;
 }
 
-
-- (NSURLSessionDataTask *)getBuilding:(NSUInteger)buildingId completion:(void (^)(NSDictionary *responseData, NSError *error))completion {
-    NSString *urlString = [NSString stringWithFormat:@"buildings/%@", [NSNumber numberWithInteger:buildingId]];
-    NSURLSessionDataTask *dataTask = [self GET:urlString
-                                    parameters:nil
-                                       success:^(NSURLSessionDataTask *task, id responseObject) {
-                                           NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task.response;
-                                           if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
-                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                   completion(responseObject, nil);
-                                               });
-                                           } else {
-                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                   completion(nil, nil);
-                                               });
-                                               NSLog(@"Received: %@", responseObject);
-                                               NSLog(@"Received HTTP %ld", (long) httpResponse.statusCode);
-                                           }
-                                       }
-                                       failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                           NSLog(@"Error: %@", task.response);
-                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                               completion(nil, error);
-                                           });
-                                       }];
-    return dataTask;
-}
-
 - (NSURLSessionDataTask *)getBuildingAttributes:(NSUInteger)buildingId completion:(void (^)(NSDictionary *responseData, NSError *error))completion {
     NSString *urlString = [NSString stringWithFormat:@"buildings/%@/edit-form/", [NSNumber numberWithInteger:buildingId]];
     NSURLSessionDataTask *dataTask = [self GET:urlString
