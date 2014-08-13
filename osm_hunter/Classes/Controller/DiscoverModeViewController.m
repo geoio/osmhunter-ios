@@ -25,6 +25,7 @@
 @property(nonatomic, strong) RMMapView *mapBoxView;
 @property(nonatomic, strong) Building *selectedBuilding;
 @property(nonatomic, strong) CLLocation *currentLocation;
+@property(nonatomic, strong) CLLocation *mapCenter;
 
 @property(nonatomic) CLLocationCoordinate2D northEast;
 @property(nonatomic) CLLocationCoordinate2D southWest;
@@ -78,33 +79,31 @@
 }
 
 - (void)fetchResults {
-    if (self.currentLocation) {
-        [self showNavbarLoadingMessage];
-        NSMutableArray *annotations = [NSMutableArray array];
-        [[APIClient sharedClient] getBuildingsNearby:self.northEast southWest:self.southWest userCoordinates:self.currentLocation.coordinate completion:^(NSDictionary *responseData, NSError *error) {
-            [self hideNavbarLoadingMessage];
-            if (!error) {
-                for (RMAnnotation *annotation in self.mapBoxView.annotations) {
-                    if ([annotation.userInfo isKindOfClass:[Building class]]) {
-                        [self.mapBoxView removeAnnotation:annotation];
-                    }
+    [self showNavbarLoadingMessage];
+    NSMutableArray *annotations = [NSMutableArray array];
+    [[APIClient sharedClient] getBuildingsNearby:self.northEast southWest:self.southWest completion:^(NSDictionary *responseData, NSError *error) {
+        [self hideNavbarLoadingMessage];
+        if (!error) {
+            for (RMAnnotation *annotation in self.mapBoxView.annotations) {
+                if ([annotation.userInfo isKindOfClass:[Building class]]) {
+                    [self.mapBoxView removeAnnotation:annotation];
                 }
-//                [self.mapBoxView removeAllAnnotations];
-                for (NSDictionary *item in responseData[@"results"]) {
-                    Building *building = [[Building alloc] initWithDictionary:item];
-                    RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:self.mapBoxView
-                                                                          coordinate:self.mapBoxView.centerCoordinate
-                                                                            andTitle:nil];
-                    annotation.userInfo = building;
-                    [annotations addObject:annotation];
-                }
-
-                [self.mapBoxView addAnnotations:annotations];
-            } else {
-                NSLog(@"Error: %@", error);
             }
-        }];
-    }
+            //                [self.mapBoxView removeAllAnnotations];
+            for (NSDictionary *item in responseData[@"results"]) {
+                Building *building = [[Building alloc] initWithDictionary:item];
+                RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:self.mapBoxView
+                                                                      coordinate:self.mapBoxView.centerCoordinate
+                                                                        andTitle:nil];
+                annotation.userInfo = building;
+                [annotations addObject:annotation];
+            }
+            
+            [self.mapBoxView addAnnotations:annotations];
+        } else {
+            NSLog(@"Error: %@", error);
+        }
+    }];
 }
 
 - (void)showNavbarLoadingMessage {
@@ -122,7 +121,11 @@
 - (IBAction)userLocationButtonPressed:(id)sender {
     [self.mapBoxView setZoom:17 animated:YES];
     [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
-    [self fetchResults];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        self.northEast = self.mapBoxView.latitudeLongitudeBoundingBox.northEast;
+        self.southWest = self.mapBoxView.latitudeLongitudeBoundingBox.southWest;
+        [self fetchResults];
+    });
 }
 
 #pragma mark RMMapViewDelegate
@@ -170,11 +173,19 @@
     }
 }
 
+- (void)beforeMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction {
+    self.mapCenter = [[CLLocation alloc] initWithLatitude:map.centerCoordinate.latitude longitude:map.centerCoordinate.longitude];
+}
+
 - (void)afterMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction {
+    self.southWest = map.latitudeLongitudeBoundingBox.southWest;
+    self.northEast = map.latitudeLongitudeBoundingBox.northEast;
     [self onBoundingBoxChange:map byUser:wasUserAction];
 }
 
 - (void)afterMapZoom:(RMMapView *)map byUser:(BOOL)wasUserAction {
+    self.southWest = map.latitudeLongitudeBoundingBox.southWest;
+    self.northEast = map.latitudeLongitudeBoundingBox.northEast;
     [self onBoundingBoxChange:map byUser:wasUserAction];
 }
 
@@ -182,18 +193,13 @@
 //    NSLog(@"Zoom: %.2f", self.mapBoxView.zoom);
     if (wasUserAction) {
         if (map.zoom > MIN_FETCH_ZOOM_LEVEL) {
-            self.southWest = map.latitudeLongitudeBoundingBox.southWest;
-            self.northEast = map.latitudeLongitudeBoundingBox.northEast;
-
             self.navigationItem.title = @"";
             [self fetchResults];
-            
         } else {
             self.navigationItem.title = @"Zoom in to load data";
         }
     }
 }
-
 #pragma mark LocationController delegate
 
 - (void)didUpdateLocation:(CLLocation *)location {
@@ -201,9 +207,11 @@
         self.currentLocation = location;
         [self.mapBoxView setZoom:17 animated:YES];
         [self.mapBoxView setCenterCoordinate:self.currentLocation.coordinate animated:YES];
-        self.northEast = self.mapBoxView.latitudeLongitudeBoundingBox.northEast;
-        self.southWest = self.mapBoxView.latitudeLongitudeBoundingBox.southWest;
-        [self fetchResults];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            self.northEast = self.mapBoxView.latitudeLongitudeBoundingBox.northEast;
+            self.southWest = self.mapBoxView.latitudeLongitudeBoundingBox.southWest;
+            [self fetchResults];
+        });
     }
 
     self.currentLocation = location;

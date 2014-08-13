@@ -3,7 +3,6 @@
 //  osm_hunter
 //
 //  Created by Andrew Tarasenko on 27/01/14.
-//  Copyright (c) 2014 estivo. All rights reserved.
 //
 
 extern NSString * const kAPIBaseUrl;

@@ -267,13 +267,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		DEE6CB8E1959C91C0049A957 /* iPad */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = iPad;
-			sourceTree = "<group>";
-		};
 		DEEB413F19502FAA00D4FB07 = {
 			isa = PBXGroup;
 			children = (
@@ -312,7 +305,6 @@
 				DED7D4EB19547DE80055A2F9 /* Classes */,
 				DEC344D319504A9D00B9FC68 /* UI */,
 				DED7D4E719547D570055A2F9 /* Resources */,
-				DEE6CB8E1959C91C0049A957 /* iPad */,
 				DEEB415A19502FAA00D4FB07 /* AppDelegate.h */,
 				DEEB415B19502FAA00D4FB07 /* AppDelegate.m */,
 				DEEB415219502FAA00D4FB07 /* Supporting Files */,

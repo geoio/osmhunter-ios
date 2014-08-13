@@ -3,7 +3,6 @@
 //  osm_hunter
 //
 //  Created by Andrew Tarasenko on 24/01/14.
-//  Copyright (c) 2014 estivo. All rights reserved.
 //
 
 #import "APIClient.h"
@@ -180,7 +179,7 @@
     return dataTask;
 }
 
-- (NSURLSessionDataTask *)getBuildingsNearby:(CLLocationCoordinate2D)northEast southWest:(CLLocationCoordinate2D)southWest userCoordinates:(CLLocationCoordinate2D)userCoordinates completion:(void (^)(NSDictionary *responseData, NSError *error))completion {
+- (NSURLSessionDataTask *)getBuildingsNearby:(CLLocationCoordinate2D)northEast southWest:(CLLocationCoordinate2D)southWest completion:(void (^)(NSDictionary *responseData, NSError *error))completion {
     NSDictionary *params = @{
                              @"south": [NSNumber numberWithDouble:southWest.latitude],
                              @"west": [NSNumber numberWithDouble:southWest.longitude],
